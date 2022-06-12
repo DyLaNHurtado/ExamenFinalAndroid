@@ -56,7 +56,7 @@ public class ListaReceta extends Fragment {
         // CREAMOS UNA CATEGORIA TEMPORAL NUEVA, CON EL DATO GUARDADO EN "ElementoSeleccionado"
         // LA CATEGORIA PROVIENE DE LA CLASE "CategoriaAdapter", METODO "onClick"
         categoriaElegida = ElementoSeleccionado.getInstance().getCategoria();
-        // ACTUALIZAMOS LA LISTA CON LA CATEGORIA ELEGIDA
+        // ACTUALIZAMOS LA LISTA CON LA CATEGORIA ELEGIDA MEDIANTE UN METODO QUE "FILTRA"
         recetaEntities = database.recetaDao().selectByCategoria(categoriaElegida.getNombre());
 
     }

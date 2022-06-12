@@ -11,6 +11,7 @@
         android:id="@+id/tituloRecetaDetalle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:text="TITULO RECETA"
         android:textSize="20sp"
         android:textStyle="italic" />
@@ -18,12 +19,14 @@
     <ImageView
         android:id="@+id/imageRecetaDetalle"
         android:layout_width="match_parent"
-        android:layout_height="125dp"
+        android:layout_height="200dp"
+        android:layout_weight="1"
         android:src="@drawable/ic_launcher_background" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:orientation="horizontal">
 
         <Space
@@ -47,7 +50,7 @@
             android:textSize="16sp" />
 
         <ImageView
-            android:id="@+id/imageView3"
+            android:id="@+id/imageDificultadDetalle"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_weight="1"
@@ -58,6 +61,7 @@
         android:id="@+id/ingredientesRecetaDetalle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_weight="2"
         android:lines="7"
         android:text="Ingredientes" />
 
@@ -65,6 +69,7 @@
         android:id="@+id/elaboracionRecetaDetalle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_weight="2"
         android:lines="10"
         android:text="Elaboración" />
 
@@ -73,6 +78,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
+        android:layout_weight="1"
         android:backgroundTint="#000000"
         android:text="Volver" />
 </LinearLayout>

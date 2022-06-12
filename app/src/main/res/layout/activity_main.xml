@@ -10,7 +10,8 @@
     <FrameLayout
         android:id="@+id/fragLayout"
         android:layout_width="match_parent"
-        android:layout_height="565dp">
+        android:layout_height="match_parent"
+        android:layout_weight="20">
 
     </FrameLayout>
 
@@ -19,6 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
+        android:layout_weight="1"
         android:backgroundTint="#000000"
         android:text="Volver a Categorias" />
 </LinearLayout>

@@ -82,6 +82,10 @@
             tools:ignore="SpeakableTextPresentCheck" />
     </LinearLayout>
 
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="8dp" />
+
     <EditText
         android:id="@+id/editTextIngredientesReceta"
         android:layout_width="match_parent"
@@ -90,6 +94,10 @@
         android:hint="Ingredientes"
         android:inputType="textPersonName"
         android:minHeight="48dp" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="5dp" />
 
     <EditText
         android:id="@+id/editTextElaboracionReceta"

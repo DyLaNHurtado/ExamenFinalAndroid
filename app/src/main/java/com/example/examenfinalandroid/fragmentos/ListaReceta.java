@@ -107,7 +107,7 @@ public class ListaReceta extends Fragment {
 
                 // ADAPTER NECESARIO PARA EL SPINNER + SU LISTENER
                 // PARA RELLENAR EL SPINNER, ES NECESARIO UN STRING []; POR LO QUE UN METODO DAO LO TENDRA QUE DEVOLVER
-                ArrayAdapter adapterSpinner = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, database.categoriaDao().getNombreCategorias());
+                ArrayAdapter adapterSpinner = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_dropdown_item, database.categoriaDao().getNombreCategorias());
                 spinnerCategoria.setAdapter(adapterSpinner);
 
                 spinnerCategoria.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

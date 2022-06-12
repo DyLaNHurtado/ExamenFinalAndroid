@@ -81,6 +81,9 @@ public class ListaReceta extends Fragment {
         imageAddReceta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // SET PARA EL VALOR DE DIFICULTAD
+                dificultadReceta = 1;
+
                 // CREACION DIALOGO
                 Dialog dialog = new Dialog(getContext());
                 dialog.setContentView(R.layout.dialog_new_receta);
@@ -157,7 +160,13 @@ public class ListaReceta extends Fragment {
                         receta.setIngredientes(editTextIngredientesReceta.getText().toString());
                         receta.setElaboracion(editTextElaboracionReceta.getText().toString());
                         receta.setCategoria(opcionSpinner);
-                        receta.setDificultad(dificultadReceta);
+
+                        if (dificultadReceta == 0) {
+                            dificultadReceta = 1;
+                            receta.setDificultad(dificultadReceta);
+                        } else if (dificultadReceta == 1 || dificultadReceta == 2 || dificultadReceta == 3) {
+                            receta.setDificultad(dificultadReceta);
+                        }
 
                         dialog.dismiss();
 

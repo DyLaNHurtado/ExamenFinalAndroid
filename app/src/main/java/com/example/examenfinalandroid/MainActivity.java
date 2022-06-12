@@ -12,6 +12,11 @@ import android.widget.Button;
 
 import com.example.examenfinalandroid.fragmentos.ListaCategoria;
 
+/*
+    Clase para la actividad principal.
+
+    Cada clase tiene ciertos comentarios de ayuda.
+ */
 public class MainActivity extends AppCompatActivity {
 
     Button btnVerMain;
@@ -33,7 +38,8 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-
+    // Metodo que reemplaza el fragmento en el frameLayout de la Actividad.
+    // aunque en este caso, solo lo hace 1 vez, cada vez que se inicia la APP o se pulsa sobre el btnVerMain
     private void reemplazarFragmentos(Fragment f) {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();

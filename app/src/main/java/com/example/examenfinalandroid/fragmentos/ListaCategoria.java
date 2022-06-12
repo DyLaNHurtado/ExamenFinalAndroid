@@ -25,6 +25,7 @@ import com.example.examenfinalandroid.model.CategoriaEntity;
 import java.util.ArrayList;
 import java.util.List;
 
+// Clase para el fragmento donde se lista las categorias
 public class ListaCategoria extends Fragment {
 
     ImageView imageAddCategoria;
@@ -41,6 +42,7 @@ public class ListaCategoria extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // INSTANCIAMOS LA BBDD Y RELLENAMOS LA LISTA CON LAS CATEGORIAS EXISTENTES
         database = DataRoomDB.getInstance(getContext());
         categoriaEntities = database.categoriaDao().getCategorias();
     }
@@ -51,17 +53,21 @@ public class ListaCategoria extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_lista_categoria, container, false);
 
+        // ELEMENTOS FRAGMENTO
         imageAddCategoria = v.findViewById(R.id.imageAddCategoria);
         recyclerCategoria = v.findViewById(R.id.recyclerCategoria);
 
+        // ELEMENTOS PARA EL RECYCLER
         llm = new LinearLayoutManager(getContext());
         recyclerCategoria.setLayoutManager(llm);
         categoriaAdapter = new CategoriaAdapter(categoriaEntities, getActivity());
         recyclerCategoria.setAdapter(categoriaAdapter);
 
+        // LISTENER PARA LA IMAGEVIEW
         imageAddCategoria.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // CREACION DIALOGO
                 Dialog dialog = new Dialog(getContext());
                 dialog.setContentView(R.layout.dialog_new_categoria);
 
@@ -73,10 +79,12 @@ public class ListaCategoria extends Fragment {
                 dialog.show();
                 dialog.getWindow().setAttributes(lp);
 
+                // ELEMENTOS DIALOGO
                 EditText editTextNewCategoria = dialog.findViewById(R.id.editTextNewCategoria);
                 Button btnCancelarCategoria = dialog.findViewById(R.id.btnCancelarCategoria);
                 Button btnAgregarCategoria = dialog.findViewById(R.id.btnAgregarCategoria);
 
+                // LISTENERS BOTONES DIALOGO
                 btnCancelarCategoria.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -96,6 +104,8 @@ public class ListaCategoria extends Fragment {
                         long resultado = database.categoriaDao().insertCategoria(categoria);
                         Log.i("insert() = ", "" + resultado); // Comprobacion
 
+                        // LIMPIAMOS LA LISTA Y LA ACTUALIZAMOS CON LOS NUEVOS DATOS
+                        categoriaEntities.clear();
                         categoriaEntities = database.categoriaDao().getCategorias();
                         categoriaAdapter = new CategoriaAdapter(categoriaEntities, getActivity());
                         recyclerCategoria.setAdapter(categoriaAdapter);

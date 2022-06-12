@@ -3,6 +3,7 @@ package com.example.examenfinalandroid.model;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+// Clase modelo para la entidad Receta
 @Entity(tableName = "tabla_recetas")
 public class RecetaEntity {
 

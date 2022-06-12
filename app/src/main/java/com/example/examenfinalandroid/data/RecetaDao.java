@@ -14,9 +14,7 @@ public interface RecetaDao {
     @Insert
     long insertReceta(RecetaEntity r);
 
-    @Query("SELECT * FROM tabla_recetas")
-    List<RecetaEntity> getRecetas();
-
     @Query("SELECT * FROM tabla_recetas where categoria = :mCategoria")
     List<RecetaEntity> selectByCategoria(String mCategoria);
+
 }

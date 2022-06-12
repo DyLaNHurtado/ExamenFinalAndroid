@@ -17,4 +17,7 @@ public interface CategoriaDao {
     @Query("SELECT * FROM tabla_categorias")
     List<CategoriaEntity> getCategorias();
 
+    @Query("SELECT nombre FROM tabla_categorias")
+    String[] getNombreCategorias();
+
 }

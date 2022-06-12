@@ -5,16 +5,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.examenfinalandroid.utils.ElementoSeleccionado;
 import com.example.examenfinalandroid.R;
+import com.example.examenfinalandroid.fragmentos.ListaReceta;
 import com.example.examenfinalandroid.model.CategoriaEntity;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 
+// Clase para el recyclerView de Categorias
 public class CategoriaAdapter extends RecyclerView.Adapter<CategoriaAdapter.ViewHolder> {
 
     private List<CategoriaEntity> categoriaEntityList;
@@ -38,7 +45,7 @@ public class CategoriaAdapter extends RecyclerView.Adapter<CategoriaAdapter.View
         CategoriaEntity item = categoriaEntityList.get(position);
 
         holder.textViewCategoriaLista.setText(item.getNombre());
-        holder.imageViewCategoriaLista.setImageResource(R.drawable.imagen_cocina);
+        holder.imageViewCategoriaLista.setImageResource(item.getFoto());
     }
 
     @Override
@@ -47,13 +54,39 @@ public class CategoriaAdapter extends RecyclerView.Adapter<CategoriaAdapter.View
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+        /*
+        Para esta ocasion, y asi evitar problemas, he llamado directamente a la interfaz del item_view,
+        y he creado un metodo llamado onClick [por ejemplo], que sea capaz
+        de obtener el elemento pulsado en la lista, y abriendo el nuevo fragmento correspondiente con un
+        dato especifico (la categoria).
+        Para ello, he creado una clase llamada "ElementoSeleccionado".
+         */
+        LinearLayout layoutCategoriaLista;
         TextView textViewCategoriaLista;
         ImageView imageViewCategoriaLista;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
+            layoutCategoriaLista = itemView.findViewById(R.id.layoutCategoriaView);
             textViewCategoriaLista = itemView.findViewById(R.id.textViewCategoriaLista);
             imageViewCategoriaLista = itemView.findViewById(R.id.imageViewCategoriaLista);
+
+            onClick();
+        }
+
+        private void onClick() {
+            layoutCategoriaLista.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ElementoSeleccionado.getInstance().setCategoria(categoriaEntityList.get(getAdapterPosition()));
+                    Snackbar.make(context.findViewById(R.id.layoutActivity), "Categoria seleccionada: " + categoriaEntityList.get(getAdapterPosition()).getNombre(), Snackbar.LENGTH_SHORT).show();
+
+                    AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragLayout, new ListaReceta()).addToBackStack(null).commit();
+
+                }
+            });
         }
     }
 }

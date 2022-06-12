@@ -15,8 +15,9 @@ import com.example.examenfinalandroid.model.RecetaEntity;
     La version se cambiara cuando hagamos un cambio en alguna entidad [por ejemplo,
     cambiar el nombre a una variable] y ya hayamos instanciado la BBDD en algun momento + ejecutado la app.
 
-    No parece necesario cambiar la version si se agrega algun metodo mas a algun Dao, aunque señalice un
-    error/aviso, al iniciar la app se actualiza.
+    
+        !! No parece necesario cambiar la version si se agrega algun metodo mas a algun Dao, aunque para evitar errores
+    tendremos que tener las tablas vacias [por ejemplo, desinstalando la aplicacion desde el emulador/movil].
  */
 @Database(entities = {CategoriaEntity.class, RecetaEntity.class}, version = 1)
 public abstract class DataRoomDB extends RoomDatabase {

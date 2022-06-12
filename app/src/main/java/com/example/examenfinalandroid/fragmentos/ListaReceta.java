@@ -20,7 +20,7 @@ import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 
-import com.example.examenfinalandroid.ElementoSeleccionado;
+import com.example.examenfinalandroid.utils.ElementoSeleccionado;
 import com.example.examenfinalandroid.R;
 import com.example.examenfinalandroid.adapters.RecetaAdapter;
 import com.example.examenfinalandroid.data.DataRoomDB;
@@ -30,6 +30,7 @@ import com.example.examenfinalandroid.model.RecetaEntity;
 import java.util.ArrayList;
 import java.util.List;
 
+// Clase para el fragmento de lista de Recetas
 public class ListaReceta extends Fragment {
 
     ImageView imageAddReceta;
@@ -42,6 +43,7 @@ public class ListaReceta extends Fragment {
     RecetaAdapter recetaAdapter;
     LinearLayoutManager llm;
 
+    // + FACILIDAD A LA HORA DE OBTENER LOS DATOS DEL SPINNER Y DEL RADIOGROUP
     String opcionSpinner;
     int dificultadReceta;
 
@@ -51,8 +53,10 @@ public class ListaReceta extends Fragment {
 
         database = DataRoomDB.getInstance(getContext());
 
+        // CREAMOS UNA CATEGORIA TEMPORAL NUEVA, CON EL DATO GUARDADO EN "ElementoSeleccionado"
+        // LA CATEGORIA PROVIENE DE LA CLASE "CategoriaAdapter", METODO "onClick"
         categoriaElegida = ElementoSeleccionado.getInstance().getCategoria();
-        System.out.println(categoriaElegida.getNombre());
+        // ACTUALIZAMOS LA LISTA CON LA CATEGORIA ELEGIDA
         recetaEntities = database.recetaDao().selectByCategoria(categoriaElegida.getNombre());
 
     }
@@ -63,17 +67,21 @@ public class ListaReceta extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_lista_receta, container, false);
 
+        // ELEMENTOS FRAGMENTO
         imageAddReceta = v.findViewById(R.id.imageAddReceta);
         recyclerReceta = v.findViewById(R.id.recyclerReceta);
 
+        // ELEMENTOS PARA EL RECYCLER
         llm = new LinearLayoutManager(getContext());
         recyclerReceta.setLayoutManager(llm);
         recetaAdapter = new RecetaAdapter(recetaEntities, getActivity());
         recyclerReceta.setAdapter(recetaAdapter);
 
+        // LISTENER PARA EL IMAGEVIEW
         imageAddReceta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // CREACION DIALOGO
                 Dialog dialog = new Dialog(getContext());
                 dialog.setContentView(R.layout.dialog_new_receta);
 
@@ -85,18 +93,21 @@ public class ListaReceta extends Fragment {
                 dialog.show();
                 dialog.getWindow().setAttributes(lp);
 
+                // ELEMENTOS DIALOGO
                 EditText editTextNombreReceta = dialog.findViewById(R.id.editTextNombreReceta);
                 EditText editTextDuracionReceta = dialog.findViewById(R.id.editTextDuracionReceta);
                 EditText editTextIngredientesReceta = dialog.findViewById(R.id.editTextIngredientesReceta);
                 EditText editTextElaboracionReceta = dialog.findViewById(R.id.editTextElaboracionReceta);
+
                 Spinner spinnerCategoria = dialog.findViewById(R.id.spinnerCategoria);
                 RadioGroup radioGroupDificultad = dialog.findViewById(R.id.radioGroupDificultad);
 
                 Button btnCancelarReceta = dialog.findViewById(R.id.btnCancelarReceta);
                 Button btnAgregarReceta = dialog.findViewById(R.id.btnAgregarReceta);
 
+                // ADAPTER NECESARIO PARA EL SPINNER + SU LISTENER
+                // PARA RELLENAR EL SPINNER, ES NECESARIO UN STRING []; POR LO QUE UN METODO DAO LO TENDRA QUE DEVOLVER
                 ArrayAdapter adapterSpinner = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, database.categoriaDao().getNombreCategorias());
-                adapterSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinnerCategoria.setAdapter(adapterSpinner);
 
                 spinnerCategoria.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -110,10 +121,11 @@ public class ListaReceta extends Fragment {
                     }
                 });
 
+                // LISTENER PARA EL RADIOGROUP
                 radioGroupDificultad.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                        switch (i){
+                        switch (i) {
                             case R.id.radioButtonFacil:
                                 dificultadReceta = 1;
                                 break;
@@ -126,6 +138,7 @@ public class ListaReceta extends Fragment {
                     }
                 });
 
+                // LISTENER PARA BOTONES DIALOGO
                 btnCancelarReceta.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -151,6 +164,7 @@ public class ListaReceta extends Fragment {
                         long resultado = database.recetaDao().insertReceta(receta);
                         Log.i("insert() = ", "" + resultado); // Comprobacion
 
+                        // LIMPIAMOS LA LISTA Y ACTUALIZAMOS, TENIENDO EN CUENTA LA CATEGORIA ELEGIDA AL PRINCIPIO
                         recetaEntities.clear();
                         recetaEntities = database.recetaDao().selectByCategoria(categoriaElegida.getNombre());
                         recetaAdapter = new RecetaAdapter(recetaEntities, getActivity());

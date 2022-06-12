@@ -11,10 +11,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.examenfinalandroid.ElementoSeleccionado;
+import com.example.examenfinalandroid.utils.ElementoSeleccionado;
 import com.example.examenfinalandroid.R;
 import com.example.examenfinalandroid.model.RecetaEntity;
 
+// Clase para el fragmento que detalla la receta seleccionada.
 public class VerReceta extends Fragment {
 
     ImageView imageRecetaDetalle, imageDificultadDetalle;
@@ -22,14 +23,15 @@ public class VerReceta extends Fragment {
     Button btnVolverReceta;
 
     RecetaEntity recetaElegida;
+
     int dificultadReceta;
-
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // OBTENEMOS LA RECETA ELEGIDA DE LA CLASE "RecetaAdapter" Y GUARDADA EN "ElementoSeleccionado"
+        // LA RECETA ELEGIDA VIENE DEL METODO "onClickDetalle".
         recetaElegida = ElementoSeleccionado.getInstance().getReceta();
     }
 
@@ -39,6 +41,7 @@ public class VerReceta extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_ver_receta, container, false);
 
+        // ELEMENTOS FRAGMENTO
         imageRecetaDetalle = v.findViewById(R.id.imageRecetaDetalle);
         imageDificultadDetalle = v.findViewById(R.id.imageDificultadDetalle);
 
@@ -49,10 +52,11 @@ public class VerReceta extends Fragment {
 
         btnVolverReceta = v.findViewById(R.id.btnVolverReceta);
 
+        // SET INFO DE LA RECETA
         imageRecetaDetalle.setImageResource(recetaElegida.getFoto());
 
         dificultadReceta = recetaElegida.getDificultad();
-        switch (dificultadReceta){
+        switch (dificultadReceta) {
             case 1:
                 imageDificultadDetalle.setImageResource(R.drawable.icon_easy);
                 break;
@@ -67,6 +71,14 @@ public class VerReceta extends Fragment {
         tiempoRecetaDetalle.setText(recetaElegida.getTiempoRealizacion());
         ingredientesRecetaDetalle.setText(recetaElegida.getIngredientes());
         elaboracionRecetaDetalles.setText(recetaElegida.getElaboracion());
+
+        // LISTENER PARA VOLVER AL FRAGMENTO ANTERIOR
+        btnVolverReceta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getFragmentManager().popBackStackImmediate();
+            }
+        });
 
         return v;
     }

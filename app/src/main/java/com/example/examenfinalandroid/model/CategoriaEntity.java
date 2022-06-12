@@ -3,6 +3,7 @@ package com.example.examenfinalandroid.model;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+// Clase modelo para Categoria
 @Entity(tableName = "tabla_categorias")
 public class CategoriaEntity {
 

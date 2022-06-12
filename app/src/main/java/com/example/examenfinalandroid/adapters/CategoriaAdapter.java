@@ -7,19 +7,21 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
+
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.examenfinalandroid.ElementoSeleccionado;
+import com.example.examenfinalandroid.utils.ElementoSeleccionado;
 import com.example.examenfinalandroid.R;
 import com.example.examenfinalandroid.fragmentos.ListaReceta;
 import com.example.examenfinalandroid.model.CategoriaEntity;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 
+// Clase para el recyclerView de Categorias
 public class CategoriaAdapter extends RecyclerView.Adapter<CategoriaAdapter.ViewHolder> {
 
     private List<CategoriaEntity> categoriaEntityList;
@@ -52,10 +54,17 @@ public class CategoriaAdapter extends RecyclerView.Adapter<CategoriaAdapter.View
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-
+        /*
+        Para esta ocasion, y asi evitar problemas, he llamado directamente a la interfaz del item_view,
+        y he creado un metodo llamado onClick [por ejemplo], que sea capaz
+        de obtener el elemento pulsado en la lista, y abriendo el nuevo fragmento correspondiente con un
+        dato especifico (la categoria).
+        Para ello, he creado una clase llamada "ElementoSeleccionado".
+         */
         LinearLayout layoutCategoriaLista;
         TextView textViewCategoriaLista;
         ImageView imageViewCategoriaLista;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -66,12 +75,12 @@ public class CategoriaAdapter extends RecyclerView.Adapter<CategoriaAdapter.View
             onClick();
         }
 
-        private void onClick(){
+        private void onClick() {
             layoutCategoriaLista.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     ElementoSeleccionado.getInstance().setCategoria(categoriaEntityList.get(getAdapterPosition()));
-                    Toast.makeText(context, "Categoria seleccionada: " + categoriaEntityList.get(getAdapterPosition()).getNombre(), Toast.LENGTH_SHORT).show();
+                    Snackbar.make(context.findViewById(R.id.layoutActivity), "Categoria seleccionada: " + categoriaEntityList.get(getAdapterPosition()).getNombre(), Snackbar.LENGTH_SHORT).show();
 
                     AppCompatActivity activity = (AppCompatActivity) view.getContext();
                     activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragLayout, new ListaReceta()).addToBackStack(null).commit();

@@ -7,19 +7,20 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.examenfinalandroid.ElementoSeleccionado;
+import com.example.examenfinalandroid.utils.ElementoSeleccionado;
 import com.example.examenfinalandroid.R;
 import com.example.examenfinalandroid.fragmentos.VerReceta;
 import com.example.examenfinalandroid.model.RecetaEntity;
 
 import java.util.List;
 
+// Clase para el recyclerView de Recetas
+// Practicamente igual a "CategoriaAdapter"
 public class RecetaAdapter extends RecyclerView.Adapter<RecetaAdapter.ViewHolder> {
 
     private List<RecetaEntity> recetaEntitiesList;
@@ -47,7 +48,7 @@ public class RecetaAdapter extends RecyclerView.Adapter<RecetaAdapter.ViewHolder
 
         int opcionRadioGroup = item.getDificultad();
 
-        switch (opcionRadioGroup){
+        switch (opcionRadioGroup) {
             case 1:
                 holder.imageDificultadLista.setImageResource(R.drawable.icon_easy);
                 break;
@@ -65,11 +66,12 @@ public class RecetaAdapter extends RecyclerView.Adapter<RecetaAdapter.ViewHolder
         return recetaEntitiesList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
         LinearLayout layoutRecetaLista;
         TextView textViewRecetaLista;
         ImageView imageDificultadLista, imageViewRecetaLista;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -81,12 +83,12 @@ public class RecetaAdapter extends RecyclerView.Adapter<RecetaAdapter.ViewHolder
             onClickDetalle();
         }
 
-        private void onClickDetalle(){
+        private void onClickDetalle() {
             layoutRecetaLista.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
                     ElementoSeleccionado.getInstance().setReceta(recetaEntitiesList.get(getAdapterPosition()));
-                    Toast.makeText(context, "Receta seleccionada: " + recetaEntitiesList.get(getAdapterPosition()).getNombre(), Toast.LENGTH_SHORT).show();
 
                     AppCompatActivity activity = (AppCompatActivity) view.getContext();
                     activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragLayout, new VerReceta()).addToBackStack(null).commit();

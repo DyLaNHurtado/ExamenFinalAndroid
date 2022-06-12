@@ -16,4 +16,5 @@ public interface RecetaDao {
 
     @Query("SELECT * FROM tabla_recetas where categoria = :mCategoria")
     List<RecetaEntity> selectByCategoria(String mCategoria);
+
 }
